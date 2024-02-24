@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-        <input type="text" name="champion">
-        <select name="type" id="">
+        <input type="text" name="champion" class="ajout-champ">
+        <select name="type" id="" class="select-ajout">
             <option value="mage">mage</option>
             <option value="assassin">assassin</option>
             <option value="tank">tank</option>
             <option value="fighter">fighter</option>
             <option value="marksman">marksman</option>
         </select>
-        <button onclick="sendChampion()">Nouveau Champion</button>
-        <button id="importButton">Importer les Champions</button>
+        <button onclick="sendChampion()" class="button-add">Nouveau Champion</button>
+        <button id="importButton" class="button-import">Importer les Champions</button>
 
-    <h1>Liste des champions</h1>
+    <h1 class="title-add">Liste des champions</h1>
     <div id="champions"></div>
     
 
@@ -29,6 +30,7 @@
             let champions = document.getElementById('champions')
             data.forEach((champion) => {
                 let championDiv = document.createElement('div')
+                championDiv.className = 'champion-div'
                 if (champion.type === 'assassin') {
                 championDiv.innerHTML = `
                     <a href="champion.html?id=${champion.id}"><h2>${champion.name} l'${champion.type}</h2></a>

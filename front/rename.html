@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="profil">
+    <a href="index.html" class="back">Retour</a>
     <form onsubmit="event.preventDefault(); updateChampion()">
-        <input type="text" name="champion">
-        <select name="type" id="">
+        <input type="text" name="champion" class="input-rename">
+        <select name="type" class="select-rename">
             <option value="mage">mage</option>
             <option value="assassin">assassin</option>
             <option value="tank">tank</option>
             <option value="fighter">fighter</option>
             <option value="marksman">marksman</option>
         </select>
-        <button type="submit">Modifier l'agent</button>
+        <button type="submit" class="button-submit">Modifier l'agent</button>
     </form>
     <script>
         let url = window.location.search    

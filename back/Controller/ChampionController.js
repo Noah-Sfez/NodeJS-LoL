@@ -3,12 +3,20 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 const getChampions = (req, res) => {
-    prisma.champion.findMany()
-        .then((champions) => {
-            res.json(champions)
+    prisma.champion
+        .findMany({
+            orderBy: {
+                createdAt: "desc", // Assure-toi que 'createdAt' est le nom correct du champ
+            },
         })
-        .catch((error) => res.json(error))
-}
+        .then((champions) => {
+            res.json(champions);
+        })
+        .catch((error) => {
+            res.json(error);
+        });
+};
+
 
 const getChampion = (req, res) => {
     let id = Number(req.params.id)

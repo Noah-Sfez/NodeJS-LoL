@@ -4,11 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div id="champion"></div>
-    <button onclick="deleteChampion()">Supprimer</button>
+<body class="profil">
+    <div>
+        <div id="champion">
+        
+    </div>
     <a href="index.html">Retour</a>
+    </div>
+    
+        
+    
 
     <script>
         let url = window.location.search    
@@ -18,10 +25,18 @@
         .then((response) => response.json())
         .then ((data) => {
             let champion = document.getElementById('champion')
-            champion.innerHTML = `
-                <h1>${data.name} le ${data.type}</h1>
+            if (data.type === 'assassin') {
+                champion.innerHTML = `
+                <h1 class='name-profil'>${data.name} l'${data.type}</h1>
                 <a href="rename.html?id=${data.id}">Renommer</a>
+                <button onclick="deleteChampion()" class="button-delete-profil">Supprimer</button>
             `
+            } else {
+            champion.innerHTML = `
+                <h1 class='name-profil'>${data.name} le ${data.type}</h1>
+                <a href="rename.html?id=${data.id}">Renommer</a>
+                <button onclick="deleteChampion()" class="button-delete-profil">Supprimer</button>
+            `}
         })
 
         const deleteChampion = async () => {
