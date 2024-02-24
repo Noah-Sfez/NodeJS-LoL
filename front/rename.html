@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form onsubmit="event.preventDefault(); updateChampion()">
+        <input type="text" name="champion">
+        <select name="type" id="">
+            <option value="mage">mage</option>
+            <option value="assassin">assassin</option>
+            <option value="tank">tank</option>
+            <option value="fighter">fighter</option>
+            <option value="marksman">marksman</option>
+        </select>
+        <button type="submit">Modifier l'agent</button>
+    </form>
+    <script>
+        let url = window.location.search    
+        let id = new URLSearchParams(url).get('id')
+        fetch (`http://localhost:3000/champions/${id}`)
+        .then((response) => response.json())
+        .then ((data) => {
+            let champion = document.querySelector('input[name="champion"]')
+            let type = document.querySelector('select[name="type"]')
+            champion.value = data.name
+            type.value = data.type
+        })
+        const updateChampion = async () => {
+            event.preventDefault()
+            let champion = document.querySelector('input[name="champion"]').value
+            let type = document.querySelector('select[name="type"]').value
+            let response = await fetch(`http://localhost:3000/champions/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: champion,
+                    type: type
+                })
+            })
+            window.location.href = "index.html"
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <input type="text" name="champion">
+        <select name="type" id="">
+            <option value="mage">mage</option>
+            <option value="assassin">assassin</option>
+            <option value="tank">tank</option>
+            <option value="fighter">fighter</option>
+            <option value="marksman">marksman</option>
+        </select>
+        <button onclick="sendChampion()">Nouveau Champion</button>
+        <button id="importButton">Importer les Champions</button>
+
+    <h1>Liste des champions</h1>
+    <div id="champions"></div>
+    
+
+    <script>
+        fetch ('http://localhost:3000/champions') 
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data)
+            let champions = document.getElementById('champions')
+            data.forEach((champion) => {
+                let championDiv = document.createElement('div')
+                championDiv.innerHTML = `
+                    <a href="champion.html?id=${champion.id}"><h2>${champion.name} le ${champion.type}</h2></a>
+                    <a href="rename.html?id=${champion.id}">Renommer</a>
+                    <a href="delete.html?id=${champion.id}">Supprimer</a>
+                    `
+                champions.appendChild(championDiv)
+            })
+        })
+        const sendChampion = async () => {
+            let champion = document.querySelector('input[name="champion"]').value
+            let type = document.querySelector('select[name="type"]').value
+            await fetch("http://localhost:3000/champions", {
+                method:"POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: champion,
+                    type: type
+                })
+            })
+            window.location.reload()
+        }
+
+        // Assure-toi que ce script est exécuté après que le DOM soit complètement chargé
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('importButton').addEventListener('click', function() {
+                fetch('http://localhost:3000/importchampions', {
+                    method: 'POST',
+                })
+                .then(response => response.json())
+                .then(data => {
+                    window.location.reload()
+                })
+                .catch(error => console.error('Erreur:', error));
+                
+            });
+            
+        });
+
+        
+    </script>
+</body>
+</html>
