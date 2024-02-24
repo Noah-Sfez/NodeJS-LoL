@@ -29,11 +29,19 @@
             let champions = document.getElementById('champions')
             data.forEach((champion) => {
                 let championDiv = document.createElement('div')
+                if (champion.type === 'assassin') {
+                championDiv.innerHTML = `
+                    <a href="champion.html?id=${champion.id}"><h2>${champion.name} l'${champion.type}</h2></a>
+                    <a href="rename.html?id=${champion.id}">Renommer</a>
+                    <a href="delete.html?id=${champion.id}">Supprimer</a>
+                `;
+            } else {
                 championDiv.innerHTML = `
                     <a href="champion.html?id=${champion.id}"><h2>${champion.name} le ${champion.type}</h2></a>
                     <a href="rename.html?id=${champion.id}">Renommer</a>
                     <a href="delete.html?id=${champion.id}">Supprimer</a>
-                    `
+                `;
+            }
                 champions.appendChild(championDiv)
             })
         })
